@@ -37,34 +37,34 @@ do
         case '1':
             bool ujMerkozes = true;
 
-            while (ujMerkozes)
+            while (ujMerkozes) // itt ugye while az ujmerkozes true
             {
-                Console.Clear();
+                Console.Clear(); //konzol torlese, amikor a jatek megnyilik tisztabb kepet kapunt
 
-                tePontszam = 0;
+                tePontszam = 0; //pontok nullazasa, szabaly volt a feladatban
                 robotPontszam = 0;
-                bool menube = false;
+                bool menube = false; // menube valtozo, hogy a jatekbol kilepjen, mivel false, itt nem lep ki, hanem az ujmerkozes true
 
                 Console.WriteLine("Üdvözöllek a kő-papír-olló játékomban!");
 
                 while (tePontszam < 3 && robotPontszam < 3)
                 {
 
-                    while (true)
+                    while (true) // azert while true , h addig menjen amig nem "jo" az ertek
                     {
-                        Console.WriteLine("Válassz egy betűt: kő (k), papír (p), olló (o), menü (m)");
+                        Console.Write("Válassz egy betűt: kő (k), papír (p), olló (o), menü (m): ");
                         targy = (Console.ReadLine() ?? "").ToLower();
 
                         if (targy != "k" && targy != "p" && targy != "o" && targy != "m")
                         {
                             Konzol.Hiba("Hibás választás! Kérlek, válassz k, p, o vagy m betűt.");
-                            continue;
+                            continue; //jump back to while(true)
                         }
 
-                        break;
+                        break; //ez csak ha jo a bemenet
                     }
 
-                    if (targy == "m")
+                    if (targy == "m") //menu
                     {
                         menube = true;
                         break;
@@ -72,6 +72,8 @@ do
 
                     int gepTargy = Random.Shared.Next(1, 4);
 
+
+                    //valasztasok
                     if (gepTargy == 1)
                     {
                         Console.WriteLine("A gép választása: kő");
@@ -98,21 +100,25 @@ do
 
                         Console.WriteLine("A választásod: olló");
                     }
-                    if (targy == "k" && gepTargy == 3 || targy == "p" && gepTargy == 1 || targy == "o" && gepTargy == 2)
+
+
+
+                    //KÖR
+                    if (targy == "k" && gepTargy == 3 || targy == "p" && gepTargy == 1 || targy == "o" && gepTargy == 2) //gyozelem
                     {
                         tePontszam++;
                         Konzol.Siker("Nyertél!");
                         Console.WriteLine("Állás: te {0} – {1} gép", tePontszam, robotPontszam);
                         nyertKorokSzama++;
                     }
-                    else if (targy == "k" && gepTargy == 2 || targy == "p" && gepTargy == 3 || targy == "o" && gepTargy == 1)
+                    else if (targy == "k" && gepTargy == 2 || targy == "p" && gepTargy == 3 || targy == "o" && gepTargy == 1) //veszteseg
                     {
                         robotPontszam++;
                         Konzol.Veszteseg("Vesztettél!");
                         Console.WriteLine("Állás: te {0} – {1} gép", tePontszam, robotPontszam);
                         vesztesKorokSzama++;
                     }
-                    else
+                    else //dontetlen
                     {
                         Konzol.Dontetlen("Döntetlen!");
                         Console.WriteLine("Állás: te {0} – {1} gép", tePontszam, robotPontszam);
@@ -120,23 +126,25 @@ do
                     }
 
 
-                    if (tePontszam == 3)
+
+                    //MERKOZES
+                    if (tePontszam == 3) //gyozelem
                     {
                         Konzol.Siker($"Megnyerted a mérkőzést {tePontszam}:{robotPontszam} arányban!");
                         nyertesekSzama++;
                     }
-                    else if (robotPontszam == 3)
+                    else if (robotPontszam == 3)//veszteseg
                     {
                         Konzol.Veszteseg($"Elvesztetted a mérkőzést {tePontszam}:{robotPontszam} arányban!");
                         vesztesekSzama++;
                     }
                 }
 
-                if (menube)
+                if (menube) //ide ugrik ha "m" lesz a bemenet
                 {
-                    ujMerkozes = false;
+                    ujMerkozes = false; 
                 }
-                else
+                else //merkozes vegen ujra akarsz e
                 {
                     char ujra;
 
@@ -167,7 +175,7 @@ do
             if (merkozesekSzama > 0)
             {
                 double gyozelmiArany = (double)nyertesekSzama / merkozesekSzama * 100;
-                Console.WriteLine($"Győzelmi arány: {gyozelmiArany:F2}%");
+                Console.WriteLine($"Győzelmi arány: {gyozelmiArany:F2}%"); //szazalek "helyes"(2db tizedes) kiirasa
             }
 
             Console.WriteLine();
@@ -203,23 +211,23 @@ do
             }
 
             Console.WriteLine();
-            Console.WriteLine("Nyomj meg egy billentyűt a visszalépéshez...");
+            Console.WriteLine("Nyomj meg egy billentyűt a visszalépéshez..."); //itt megall hogy eltudd olvasni, ker egy bemenetet
             Console.ReadKey(true);
 
             break;
 
         case 'k':
         case 'K':
-            Console.WriteLine("Viszlát!");
+            Console.WriteLine("Viszlát, köszönöm, hogy az ÉN játékommal játszottál.");
             break;
 
         default:
             Konzol.Hiba("Ismeretlen menüpont.");
 
-            Console.WriteLine("Nyomj meg egy billentyűt a visszalépéshez...");
+            Console.WriteLine("Nyomj meg egy billentyűt a visszalépéshez..."); //itt megall hogy eltudd olvasni, ker egy bemenetet
             Console.ReadKey(true);
 
             break;
     }
 }
-while (valasztas != 'k' && valasztas != 'K');
+while (valasztas != 'k' && valasztas != 'K'); // ha a k-t hasznaljuk, lefut a case:k és K de ott megall a cikus
